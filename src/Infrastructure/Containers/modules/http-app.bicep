@@ -93,3 +93,4 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
 }
 
 output fqdn string = enableIngress ? containerApp.properties.configuration.ingress.fqdn : 'Ingress not enabled'
+output revisionFqdn string = enableIngress ? containerApp.properties.latestRevisionFqdn : 'Ingress not enabled'

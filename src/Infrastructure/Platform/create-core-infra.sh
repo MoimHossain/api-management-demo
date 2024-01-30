@@ -2,7 +2,7 @@
 
 export resourceGroupName="APIM-DEVOPS"
 export location="westeurope"
-export APP_NAME="solar"
+export APP_NAME="solarx"
 export APP_ENV="dev"
 
 echo "Starting Infrastructure provisioning..."

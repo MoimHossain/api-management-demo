@@ -19,7 +19,7 @@ module frontendApp 'modules/http-app.bicep' = {
     location: location
     containerAppName: imageName
     environmentName: acaEnvironment.name    
-    revisionMode: 'Single'    
+    revisionMode: 'Multiple'    
     hasIdentity: true
     userAssignedIdentityName: uami.name
     containerImage: '${containerRegistryName}.azurecr.io/${imageName}:${tagName}'
@@ -60,3 +60,6 @@ module frontendApp 'modules/http-app.bicep' = {
     ]
   }
 }
+
+output fqdn string = frontendApp.outputs.fqdn
+output revisionFqdn string = frontendApp.outputs.revisionFqdn
