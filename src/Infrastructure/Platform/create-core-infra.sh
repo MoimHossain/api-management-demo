@@ -7,6 +7,8 @@ export APP_ENV="dev"
 
 echo "Starting Infrastructure provisioning..."
 
+az keyvault list-deleted
+az keyvault purge -n solarxkeyvaultdev
 
 echo "Creating resource group..."
 az group create --name $resourceGroupName --location $location
