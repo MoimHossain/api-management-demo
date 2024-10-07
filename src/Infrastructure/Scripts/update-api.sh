@@ -36,4 +36,4 @@ fi
 
 
 echo "Deploying products Bicep file..."
-az deployment group create --resource-group $resourceGroupName --template-file 'src/Infrastructure/API-Products/main.bicep'  --parameters 'Infrastructure/API-Products/main.bicepparam'
+az deployment group create --resource-group $resourceGroupName --template-file 'src/Infrastructure/API-Products/main.bicep'  --parameters 'src/Infrastructure/API-Products/main.bicepparam'
