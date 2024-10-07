@@ -33,6 +33,7 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 ToDoApiConfig.Configure(app);
+SoftwareVersion.Configure(app);
 
 app.Run();
 

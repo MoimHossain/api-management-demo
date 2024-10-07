@@ -16,25 +16,25 @@ variables:
  
 
 stages:
-  # - stage: BuildContainer
-  #   displayName: 'Build Container and pushes to registry'
-  #   jobs:
-  #   - job: Build
-  #     displayName: 'Build Job'
-  #     steps:
-  #     - checkout: self
-  #     - task: AzureCLI@2
-  #       displayName: Build docker image for TODO API and push to Azure container registry 
-  #       inputs:
-  #         azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
-  #         scriptType: 'bash'
-  #         scriptLocation: 'scriptPath'
-  #         workingDirectory: 'src/TodoApi'
-  #         scriptPath: 'src/Infrastructure/Scripts/build-containers.sh'
-  #       env:
-  #           imageName: $(imageName)
-  #           tag: $(tag)
-  #           registry: $(registry)
+  - stage: BuildContainer
+    displayName: 'Build Container and pushes to registry'
+    jobs:
+    - job: Build
+      displayName: 'Build Job'
+      steps:
+      - checkout: self
+      - task: AzureCLI@2
+        displayName: Build docker image for TODO API and push to Azure container registry 
+        inputs:
+          azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
+          scriptType: 'bash'
+          scriptLocation: 'scriptPath'
+          workingDirectory: 'src/TodoApi'
+          scriptPath: 'src/Infrastructure/Scripts/build-containers.sh'
+        env:
+            imageName: $(imageName)
+            tag: $(tag)
+            registry: $(registry)
             
 
   - stage: DeployToDoApiStage
@@ -53,14 +53,13 @@ stages:
                   inputs:
                     azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
                     scriptType: 'bash'
-                    scriptLocation: 'scriptPath'
-                    #workingDirectory: 'src/Infrastructure/Containers'
+                    scriptLocation: 'scriptPath'                    
                     scriptPath: 'src/Infrastructure/Scripts/deploy-containerapp.sh'
                   env:
                     APP_NAME: $(APP_NAME)
                     APP_ENV: $(APP_ENV)
                     imageName: $(imageName)
-                    tagName: '1593' # $(tag)
+                    tagName: $(tag)
                     location: $(location)
                     resourceGroupName: $(resourceGroupName)                
                 - task: AzureCLI@2
@@ -75,6 +74,6 @@ stages:
                     APP_NAME: $(APP_NAME)
                     APP_ENV: $(APP_ENV)
                     imageName: $(imageName)
-                    tag: '1593' # $(tag)
+                    tag: $(tag)
                     location: $(location)
                     resourceGroupName: $(resourceGroupName)

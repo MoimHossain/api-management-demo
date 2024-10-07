@@ -133,10 +133,56 @@
           }
         }
       }
+    },
+    "/software-version": {
+      "get": {
+        "tags": [
+          "TodoApi"
+        ],
+        "operationId": "ListToDo",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SoftwareVersionInfo"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "SoftwareVersionInfo": {
+        "type": "object",
+        "properties": {
+          "assembly": {
+            "type": "string",
+            "nullable": true
+          },
+          "assemblyVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "productVersion": {
+            "type": "string",
+            "nullable": true
+          },
+          "informationalVersion": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "TodoItem": {
         "type": "object",
         "properties": {
