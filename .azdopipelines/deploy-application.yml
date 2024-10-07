@@ -58,8 +58,9 @@ stages:
                     scriptPath: 'src/Infrastructure/Scripts/deploy-containerapp.sh'
                   env:
                     APP_NAME: $(APP_NAME)
-                    APP_ENV: $(APP_ENV)                    
-                    TAG_NAME: '1593' # $(tag)
+                    APP_ENV: $(APP_ENV)
+                    imageName: $(imageName)
+                    tagName: '1593' # $(tag)
                     location: $(location)
                     resourceGroupName: $(resourceGroupName)                
                 # - task: AzureCLI@2

@@ -16,9 +16,7 @@ echo "Starting script...$tag and image name $imageName"
 echo "Resource Group Name: $resourceGroupName"
 echo "Location: $location"
 echo "App Name: $APP_NAME"
-echo "App Environment: $APP_ENV"
-echo "Container Registry Name: $containerRegistryName"
-echo "Tag Name: $tagNameE"
+echo "Tag Name: $tagName"
 echo "Image Name: $imageName"
 
 
