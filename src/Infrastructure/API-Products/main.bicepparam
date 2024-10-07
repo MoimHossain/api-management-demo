@@ -17,7 +17,7 @@ param apiName = '${API_NAME}'
 param backendHostKeyName = '${KEY_BACKEND_HOST}'
 param activeRevisionName = '${activeNameWithoutQuotes}'
 
-param apiVersionSetName = 'ToDoAPI-VersionSet'
+param apiVersionSetName = '${API_NAME}-VersionSet'
 param apiVersionSetDescription = 'Version set for compliance API'
 param apiDescription = 'API for ${appname}'
 param apiRevisionDescription = 'Initial revision'

@@ -19,7 +19,7 @@ primaryModeLower=$(echo "$primaryMode" | tr '[:upper:]' '[:lower:]')
 if [[ "$primaryModeLower" == "yes" || "$primaryModeLower" == "1" || "$primaryModeLower" == "true" ]]; then
     echo "Updating the Primary API..."
     export activeNameWithoutQuotes=''
-    export API_NAME="todo-api-ga"
+    export API_NAME="todo-api"
     export API_VERSION="public-v1"
     export KEY_BACKEND_HOST="PRIMARY_BACKEND_HOST"
 else
@@ -28,7 +28,7 @@ else
     echo 'Active revision name: ' $activeRevisionNameWithQuotes
     activeNameWithoutQuotes=$(echo $activeRevisionNameWithQuotes | tr -d "\"")        
     export activeNameWithoutQuotes=$activeNameWithoutQuotes
-    export API_NAME="todo-api-preview"
+    export API_NAME="todo-api"
     export API_VERSION="preview-v1"
     export KEY_BACKEND_HOST="PREVIEW_BACKEND_HOST"
     echo "Environment variable set for active revision: $activeNameWithoutQuotes"
