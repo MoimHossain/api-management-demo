@@ -16,7 +16,7 @@ variables:
  
 
 stages:
-  - stage: Build Container
+  - stage: BuildContainer
     displayName: 'Build Container and pushes to registry'
     jobs:
     - job: Build
