@@ -63,18 +63,18 @@ stages:
                     tagName: '1593' # $(tag)
                     location: $(location)
                     resourceGroupName: $(resourceGroupName)                
-                # - task: AzureCLI@2
-                #   displayName: Update API management
-                #   inputs:
-                #     azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
-                #     scriptType: 'bash'
-                #     scriptLocation: 'scriptPath'
-                #     scriptPath: 'Infrastructure/scripts/update-api.sh'
-                #   env:
-                #     primaryMode: "no"
-                #     APP_NAME: $(APP_NAME)
-                #     APP_ENV: $(APP_ENV)
-                #     imageName: $(imageName)
-                #     tag: $(tag)
-                #     location: $(location)
-                #     resourceGroupName: $(resourceGroupName)
+                - task: AzureCLI@2
+                  displayName: Update API management
+                  inputs:
+                    azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
+                    scriptType: 'bash'
+                    scriptLocation: 'scriptPath'
+                    scriptPath: 'src/Infrastructure/Scripts/update-api.sh'
+                  env:
+                    primaryMode: "no"
+                    APP_NAME: $(APP_NAME)
+                    APP_ENV: $(APP_ENV)
+                    imageName: $(imageName)
+                    tag: '1593' # $(tag)
+                    location: $(location)
+                    resourceGroupName: $(resourceGroupName)
