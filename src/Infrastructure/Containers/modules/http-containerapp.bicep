@@ -23,20 +23,25 @@ param revisionMode string = 'Single'
 param hasIdentity bool
 param userAssignedIdentityName string
 
-param trafficDistribution array
+param trafficDistribution array = [
+  {
+    latestRevision: true
+    weight: 100
+  }
+]
 
-var sanitizedRevisionSuffix = toLower(revisionSuffix)  // substring(revisionSuffix, 0, 10)
+var sanitizedRevisionSuffix = substring(revisionSuffix, 0, 10)
 var useCustomRevisionSuffix = revisionMode == 'Multiple'
 
 resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
   name: userAssignedIdentityName
 }
 
-resource environment 'Microsoft.App/managedEnvironments@2022-11-01-preview' existing = {
+resource environment 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
   name: environmentName
 }
 
-resource containerApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
+resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
   name: containerAppName
   location: location
   identity: hasIdentity ? {
@@ -49,7 +54,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
     managedEnvironmentId: environment.id    
     configuration: {
       activeRevisionsMode: revisionMode
-      secrets: secrets
+      secrets: secrets      
       registries: isPrivateRegistry ? [
         {
           server: containerRegistry
@@ -65,7 +70,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
         traffic: trafficDistribution
       }
       dapr: {
-        enabled: true
+        enabled: false
         appPort: containerPort
         appId: containerAppName
       }
@@ -88,6 +93,3 @@ resource containerApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
 }
 
 output fqdn string = enableIngress ? containerApp.properties.configuration.ingress.fqdn : 'Ingress not enabled'
-output latestRevisionFqdn string = enableIngress ? containerApp.properties.latestRevisionFqdn : 'Ingress not enabled'
-output latestReadyRevisionName string = containerApp.properties.latestReadyRevisionName
-output latestRevisionName string = containerApp.properties.latestRevisionName

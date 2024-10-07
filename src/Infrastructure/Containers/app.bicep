@@ -7,11 +7,36 @@ param location string = resourceGroup().location
 param acaEnvName string 
 param uamiName string
 param appInsightName string
-param containerPort int = 8080
+param containerPort int
+param activeRevisionName string = ''
 
-resource acaEnvironment 'Microsoft.App/managedEnvironments@2022-03-01'  existing = {   name: acaEnvName }
+resource acaEnvironment 'Microsoft.App/managedEnvironments@2022-11-01-preview'  existing = {   name: acaEnvName }
 resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = { name: uamiName }
 resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = { name: appInsightName }
+
+var containerRegistry = '${containerRegistryName}.azurecr.io'
+var containerImage = '${containerRegistryName}.azurecr.io/${imageName}:${tagName}'
+
+
+
+
+var trafficDistribution = !empty(activeRevisionName) ? [
+      {           
+          revisionName: activeRevisionName
+          weight: 100
+      }
+      {
+          revisionName: '${imageName}--${toLower(tagName)}'
+          label: 'latest'
+          weight: 0
+      }
+] : [
+  {
+    latestRevision: true
+    weight: 100
+  }
+]
+
 
 module frontendApp 'modules/http-app.bicep' = {
   name: imageName
@@ -19,11 +44,13 @@ module frontendApp 'modules/http-app.bicep' = {
     location: location
     containerAppName: imageName
     environmentName: acaEnvironment.name    
-    revisionMode: 'Multiple'    
+    revisionMode: 'Multiple'
+    revisionSuffix: tagName
+    trafficDistribution: trafficDistribution
     hasIdentity: true
     userAssignedIdentityName: uami.name
-    containerImage: '${containerRegistryName}.azurecr.io/${imageName}:${tagName}'
-    containerRegistry: '${containerRegistryName}.azurecr.io'
+    containerImage: containerImage
+    containerRegistry: containerRegistry
     isPrivateRegistry: true
     containerRegistryUsername: ''
     registryPassword: ''    
@@ -33,6 +60,7 @@ module frontendApp 'modules/http-app.bicep' = {
     isExternalIngress: true // external ingress for a vent app is still a private IP
     minReplicas: 1
     env: [
+    
       {
         name: 'APPINSIGHT_CONN_STR'
         value: appInsights.properties.ConnectionString
@@ -58,4 +86,6 @@ module frontendApp 'modules/http-app.bicep' = {
 }
 
 output fqdn string = frontendApp.outputs.fqdn
-output revisionFqdn string = frontendApp.outputs.revisionFqdn
+output latestRevisionFqdn string = frontendApp.outputs.latestRevisionFqdn
+output latestReadyRevisionName string = frontendApp.outputs.latestReadyRevisionName
+output latestRevisionName string = frontendApp.outputs.latestRevisionName
