@@ -1,11 +1,16 @@
 #!/bin/bash
 
-export resourceGroupName="api-management-demo"
-export location="westeurope"
-export APP_NAME="solar"
-export APP_ENV="dev"
+# export resourceGroupName="api-management-demo"
+# export location="westeurope"
+# export APP_NAME="solar"
+# export APP_ENV="dev"
 
 echo "Starting Infrastructure provisioning..."
+
+echo "Resource Group Name: $resourceGroupName"
+echo "Location: $location"
+echo "App Name: $APP_NAME"
+echo "App Environment: $APP_ENV"
 
 # az keyvault list-deleted
 # az keyvault purge -n solarxkeyvaultdev
