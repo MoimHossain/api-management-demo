@@ -70,7 +70,7 @@ stages:
                     scriptLocation: 'scriptPath'
                     scriptPath: 'src/Infrastructure/Scripts/update-api.sh'
                   env:
-                    primaryMode: "no"
+                    primaryMode: "yes"
                     APP_NAME: $(APP_NAME)
                     APP_ENV: $(APP_ENV)
                     imageName: $(imageName)
