@@ -38,9 +38,10 @@ stages:
             
 
   - stage: DeployToDoApiStage
+    displayName: 'Deploy ToDo API'
     jobs:
       - deployment: DeployToDoApiJob
-        displayName: Builds container image and deploys to Azure container registry
+        displayName: 'Deploy ToDo API'
         environment: AEGIS-DEV
         strategy:
           runOnce:

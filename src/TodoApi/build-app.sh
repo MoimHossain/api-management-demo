@@ -1,8 +1,14 @@
 #!/bin/bash
 
-imageName="todo-api"
-tag="beta2"
-registry="solarcontregistrydev.azurecr.io"
+# imageName="todo-api"
+# tag="beta2"
+# registry="solarcontregistrydev.azurecr.io"
+
+echo "Starting buiding container images"
+echo "Image Name: $imageName"
+echo "Tag: $tag"
+echo "Registry: $registry"
+
 
 echo "Login to Azure Container Registry"
 accessToken=$(az acr login --name $registry --expose-token --output tsv --query accessToken)
