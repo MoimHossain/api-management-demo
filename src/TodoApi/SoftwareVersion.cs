@@ -16,7 +16,7 @@ namespace TodoApi
                     FileVersionInfo.GetVersionInfo(typeof(Program).Assembly.Location).ProductVersion,
                     100);
 
-                todoApiGroup.MapGet("/", () => softwareVersionResponse).WithName("ListToDo").WithOpenApi();                
+                todoApiGroup.MapGet("/", () => softwareVersionResponse).WithName("SoftwareVersion").WithOpenApi();                
             }
         }
     }

@@ -139,7 +139,7 @@
         "tags": [
           "TodoApi"
         ],
-        "operationId": "ListToDo",
+        "operationId": "SoftwareVersion",
         "responses": {
           "200": {
             "description": "OK",
