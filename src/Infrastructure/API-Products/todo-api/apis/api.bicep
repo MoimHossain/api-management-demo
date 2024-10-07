@@ -1,20 +1,21 @@
 
 param apimServiceName string
-param productName string = 'neptune-product'
-param apiName string = 'neptune-api'
+param productName string
+param apiName string
+param backendHostKeyName string
 param serviceUrl string
 param apiVersion string
 param apiVersionSetId string
-param apiVersionDescription string = ''
+param apiVersionDescription string
+param apiRevision string
+param apiRevisionDescription string
+param description string
+param displayName string
 
-param apiRevision string = '1'
-param apiRevisionDescription string = ''
 param isCurrent bool = true
 param apiType string = 'http'
-param description string = 'Neptune Web API'
-param displayName string = 'Neptune Web API'
 
-resource neptuneWebApi 'Microsoft.ApiManagement/service/apis@2023-03-01-preview' = {
+resource Api 'Microsoft.ApiManagement/service/apis@2023-03-01-preview' = {
   name: '${apimServiceName}/${apiName}'  
   properties: {
     apiRevision: apiRevision
@@ -37,14 +38,14 @@ resource neptuneWebApi 'Microsoft.ApiManagement/service/apis@2023-03-01-preview'
     name: 'policy'
     properties: {
       format: 'rawxml'
-      value: loadTextContent('../policies/azdo-authorization-policy.xml')
+      value: replace(loadTextContent('../policies/common-api-policy.xml'), 'KEY_HOSTNAME', backendHostKeyName) 
     }
   }
 }
 
-resource neptuneWebApiWithProduct 'Microsoft.ApiManagement/service/products/apis@2023-03-01-preview' = {
+resource complianceWebApiWithProduct 'Microsoft.ApiManagement/service/products/apis@2023-03-01-preview' = {
   name: '${apimServiceName}/${productName}/${apiName}'
   dependsOn: [
-    neptuneWebApi
+    Api
   ]
 }

@@ -1,6 +1,6 @@
 <policies>
     <inbound>
-        <send-request mode="new" response-variable-name="tokenstate" timeout="20" ignore-error="true">
+        <!-- <send-request mode="new" response-variable-name="tokenstate" timeout="20" ignore-error="true">
             <set-url>{{azuredevopsendpoint}}</set-url>
             <set-method>GET</set-method>
             <set-header name="Authorization" exists-action="override">
@@ -22,9 +22,9 @@
                     </set-header>
                 </return-response>
             </when>
-        </choose>
+        </choose> -->
         <set-header name="Host" exists-action="override">
-            <value>{{containerappbackendhostname}}</value>
+            <value>{{KEY_HOSTNAME}}</value>
         </set-header>
     </inbound>
     <backend>

@@ -7,7 +7,7 @@
 		<UserSecretsId>f15884b5-3473-4192-8811-3c1a9fbd6c39</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>.</DockerfileContext>
-		<OpenApiDocumentsDirectory>$(MSBuildProjectDirectory)\..\Infrastructure\API-Products\neptune-product\apis</OpenApiDocumentsDirectory>
+		<OpenApiDocumentsDirectory>$(MSBuildProjectDirectory)\..\Infrastructure\API-Products\todo-api\apis</OpenApiDocumentsDirectory>
 		<OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
 		<OpenApiGenerateDocumentsOnBuild>true</OpenApiGenerateDocumentsOnBuild>
 	</PropertyGroup>

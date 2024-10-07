@@ -1,9 +1,4 @@
 
-
-metadata name = 'API Management Service API Version Sets'
-metadata description = 'This module deploys an API Management Service API Version Set.'
-metadata owner = 'Azure/module-maintainers'
-
 param apimServiceName string
 param name string = 'default'
 param description string = ''
