@@ -23,11 +23,12 @@ stages:
               steps:
                 - checkout: self
                 - task: AzureCLI@2
-                  displayName: Provision or update resources
+                  displayName: Provision or update resources                  
                   inputs:
                     azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
+                    workingDirectory: 'src/Infrastructure/Platform'
                     scriptType: 'bash'
-                    scriptLocation: 'scriptPath'
+                    scriptLocation: 'scriptPath'                    
                     scriptPath: 'src/Infrastructure/Platform/create-core-infra.sh'
                   env:
                     APP_NAME: $(APP_NAME)
