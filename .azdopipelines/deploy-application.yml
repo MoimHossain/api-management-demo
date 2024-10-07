@@ -16,7 +16,7 @@ variables:
  
 
 stages:
-  - stage: Build
+  - stage: Build Container
     displayName: 'Build Container and pushes to registry'
     jobs:
     - job: Build
@@ -37,42 +37,42 @@ stages:
             registry: $(registry)
             
 
-  # - stage: DeployComplainceApiStage
-  #   jobs:
-  #     - deployment: DeployComplainceApiJob
-  #       displayName: Builds container image and deploys to Azure container registry
-  #       environment: AEGIS-DEV
-  #       strategy:
-  #         runOnce:
-  #           deploy:
-  #             steps:
-  #               - checkout: self
-  #               - task: AzureCLI@2
-  #                 displayName: Deploy containerapp to ACA
-  #                 inputs:
-  #                   azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
-  #                   scriptType: 'bash'
-  #                   scriptLocation: 'scriptPath'
-  #                   scriptPath: 'Infrastructure/scripts/deploy-containerapp.sh'
-  #                 env:
-  #                   APP_NAME: $(APP_NAME)
-  #                   APP_ENV: $(APP_ENV)
-  #                   imageName: $(imageName)
-  #                   tag: $(tag)
-  #                   location: $(location)
-  #                   resourceGroupName: $(resourceGroupName)                
-  #               - task: AzureCLI@2
-  #                 displayName: Update API management
-  #                 inputs:
-  #                   azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
-  #                   scriptType: 'bash'
-  #                   scriptLocation: 'scriptPath'
-  #                   scriptPath: 'Infrastructure/scripts/update-api.sh'
-  #                 env:
-  #                   primaryMode: "no"
-  #                   APP_NAME: $(APP_NAME)
-  #                   APP_ENV: $(APP_ENV)
-  #                   imageName: $(imageName)
-  #                   tag: $(tag)
-  #                   location: $(location)
-  #                   resourceGroupName: $(resourceGroupName)
+  - stage: DeployToDoApiStage
+    jobs:
+      - deployment: DeployToDoApiJob
+        displayName: Builds container image and deploys to Azure container registry
+        environment: AEGIS-DEV
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: AzureCLI@2
+                  displayName: Deploy containerapp to ACA
+                  inputs:
+                    azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
+                    scriptType: 'bash'
+                    scriptLocation: 'scriptPath'
+                    workingDirectory: 'src/Infrastructure/Containers'
+                    scriptPath: 'src/Infrastructure/Containers/deploy.sh'
+                  env:
+                    APP_NAME: $(APP_NAME)
+                    APP_ENV: $(APP_ENV)                    
+                    TAG_NAME: $(tag)
+                    location: $(location)
+                    resourceGroupName: $(resourceGroupName)                
+                # - task: AzureCLI@2
+                #   displayName: Update API management
+                #   inputs:
+                #     azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
+                #     scriptType: 'bash'
+                #     scriptLocation: 'scriptPath'
+                #     scriptPath: 'Infrastructure/scripts/update-api.sh'
+                #   env:
+                #     primaryMode: "no"
+                #     APP_NAME: $(APP_NAME)
+                #     APP_ENV: $(APP_ENV)
+                #     imageName: $(imageName)
+                #     tag: $(tag)
+                #     location: $(location)
+                #     resourceGroupName: $(resourceGroupName)
