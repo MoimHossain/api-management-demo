@@ -41,7 +41,7 @@ resource environment 'Microsoft.App/managedEnvironments@2022-03-01' existing = {
   name: environmentName
 }
 
-resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
+resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: containerAppName
   location: location
   identity: hasIdentity ? {
@@ -68,6 +68,23 @@ resource containerApp 'Microsoft.App/containerApps@2022-03-01' = {
         targetPort: containerPort
         transport: 'auto'
         traffic: trafficDistribution
+        allowInsecure: false
+        corsPolicy: {
+          allowedOrigins: [
+            '*'
+          ]
+          allowedMethods: [
+            'GET'
+            'POST'
+            'PUT'
+            'DELETE'
+            'OPTIONS'
+          ]
+          allowedHeaders: [
+            '*'
+          ]          
+        }
+
       }
       dapr: {
         enabled: true

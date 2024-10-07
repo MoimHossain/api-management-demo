@@ -1,0 +1,36 @@
+
+trigger: none
+#- master
+
+pool:
+  vmImage: ubuntu-latest
+variables:
+ resourceGroupName: "api-management-demo" 
+ location: "westeurope"
+ APP_NAME: "solar"
+ APP_ENV: "dev"
+
+
+stages:
+  - stage: PlatformProvisionStage
+    jobs:
+      - deployment: PlatformProvision
+        displayName: Provisions or updates the Development environment
+        environment: AEGIS-DEV
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - task: AzureCLI@2
+                  displayName: Provision or update resources
+                  inputs:
+                    azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
+                    scriptType: 'bash'
+                    scriptLocation: 'scriptPath'
+                    scriptPath: 'src/Infrastructure/Platform/create-core-infra.sh'
+                  env:
+                    APP_NAME: $(APP_NAME)
+                    APP_ENV: $(APP_ENV)
+                    resourceGroupName: $(resourceGroupName)
+                    location: $(location)

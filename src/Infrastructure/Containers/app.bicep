@@ -7,7 +7,7 @@ param location string = resourceGroup().location
 param acaEnvName string 
 param uamiName string
 param appInsightName string
-param azureDevOpsOrg string 
+param containerPort int = 8080
 
 resource acaEnvironment 'Microsoft.App/managedEnvironments@2022-03-01'  existing = {   name: acaEnvName }
 resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = { name: uamiName }
@@ -28,15 +28,11 @@ module frontendApp 'modules/http-app.bicep' = {
     containerRegistryUsername: ''
     registryPassword: ''    
     useManagedIdentityForImagePull: true
-    containerPort: 80
+    containerPort: containerPort
     enableIngress: true
     isExternalIngress: true // external ingress for a vent app is still a private IP
     minReplicas: 1
     env: [
-      {
-        name: 'AZDO_ORG'
-        value: azureDevOpsOrg
-      }
       {
         name: 'APPINSIGHT_CONN_STR'
         value: appInsights.properties.ConnectionString

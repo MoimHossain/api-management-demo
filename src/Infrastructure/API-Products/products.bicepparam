@@ -5,7 +5,7 @@ var appEnv = readEnvironmentVariable('APP_ENV')
 
 param apimServiceName = '${appname}apim${appEnv}'
 param envrionmentName = '${appname}-appenv-${appEnv}'
-param containerAppName = 'neptune-webapi'
+param containerAppName = 'todo-api'
 param productName = '${appname}-product'
 param apiName = '${appname}-api'
 param azureDevOpsEndpoint = 'https://dev.azure.com/moim/_apis/connectionData'

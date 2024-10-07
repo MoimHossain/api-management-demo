@@ -5,11 +5,12 @@ var appEnv = readEnvironmentVariable('APP_ENV')
 
 param uamiName = '${appname}-uami-${appEnv}'
 
-param imageName = 'neptune-webapi'
+param imageName = 'todo-api'
 param tagName = readEnvironmentVariable('TAG_NAME')
 param containerRegistryName = '${appname}contregistry${appEnv}'
 param acaEnvName = '${appname}-appenv-${appEnv}'
 
 param appInsightName = '${appname}-appinsights-${appEnv}'
-param azureDevOpsOrg = 'moim' 
+
+param containerPort = 8080
 

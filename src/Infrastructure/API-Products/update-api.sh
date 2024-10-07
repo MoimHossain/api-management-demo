@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-export resourceGroupName="APIM-DEVOPS"
+export resourceGroupName="api-management-demo"
 export location="westeurope"
 export APP_NAME="solar"
 export APP_ENV="dev"
