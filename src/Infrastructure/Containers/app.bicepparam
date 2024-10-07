@@ -3,7 +3,7 @@ using 'app.bicep'
 
 var appname = readEnvironmentVariable('APP_NAME')
 var appEnv = readEnvironmentVariable('APP_ENV')
-var tag = readEnvironmentVariable('tag')
+var tag = readEnvironmentVariable('tagName')
 var image = readEnvironmentVariable('imageName')
 var activeNameWithoutQuotes = readEnvironmentVariable('activeNameWithoutQuotes')
 
