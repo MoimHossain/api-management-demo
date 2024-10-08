@@ -11,12 +11,18 @@ param apiRevision string
 param apiRevisionDescription string
 param description string
 param displayName string
+param apiPath string = ''
 
 param isCurrent bool = true
 param apiType string = 'http'
 
+resource service 'Microsoft.ApiManagement/service@2021-08-01' existing = {
+  name: apimServiceName
+}
+
 resource Api 'Microsoft.ApiManagement/service/apis@2023-03-01-preview' = {
-  name: '${apimServiceName}/${apiName}'  
+  parent: service
+  name: '${apiName}-${apiVersion}'  
   properties: {
     apiRevision: apiRevision
     apiRevisionDescription: apiRevisionDescription
@@ -29,7 +35,7 @@ resource Api 'Microsoft.ApiManagement/service/apis@2023-03-01-preview' = {
     apiVersionSetId: apiVersionSetId
     format: 'openapi+json'
     value: loadTextContent('TodoApi.json')
-    path: apiName
+    path: apiPath
     subscriptionRequired: false
     serviceUrl: serviceUrl
   }

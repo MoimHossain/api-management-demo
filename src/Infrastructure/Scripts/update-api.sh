@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# +============================+
+# export resourceGroupName="api-management-demo"
+# export location="westeurope"
+# export APP_NAME="solar"
+# export APP_ENV="dev"
+# export imageName="todo-api"
+# export primaryMode="yes"
+# +============================+
 
 echo "Update API script started..."
 echo "============================"
