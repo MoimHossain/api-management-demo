@@ -5,6 +5,8 @@ param activeRevisionName string
 param containerAppName string
 param backendHostKeyName string
 param productName string
+param productDisplayName string
+param productDescription string
 param apiName string
 param apiVersionSetName string
 param apiVersionSetDescription string
@@ -61,6 +63,8 @@ module apiProduct 'todo-api/todo-product.bicep' = {
   params: {
     apimServiceName: apimServiceName
     productName: productName
+    productDisplayName: productDisplayName
+    productDescription: productDescription
     backendHostKeyName: backendHostKeyName
     apiName: apiName
     serviceUrl: 'https://${environment.properties.staticIp}/'

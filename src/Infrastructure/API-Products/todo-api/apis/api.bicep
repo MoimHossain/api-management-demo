@@ -1,6 +1,5 @@
 
 param apimServiceName string
-param productName string
 param apiName string
 param backendHostKeyName string
 param serviceUrl string
@@ -16,13 +15,15 @@ param apiPath string = ''
 param isCurrent bool = true
 param apiType string = 'http'
 
+
+
 resource service 'Microsoft.ApiManagement/service@2021-08-01' existing = {
   name: apimServiceName
 }
 
 resource Api 'Microsoft.ApiManagement/service/apis@2023-03-01-preview' = {
   parent: service
-  name: '${apiName}-${apiVersion}'  
+  name: apiName
   properties: {
     apiRevision: apiRevision
     apiRevisionDescription: apiRevisionDescription
@@ -49,9 +50,6 @@ resource Api 'Microsoft.ApiManagement/service/apis@2023-03-01-preview' = {
   }
 }
 
-resource complianceWebApiWithProduct 'Microsoft.ApiManagement/service/products/apis@2023-03-01-preview' = {
-  name: '${apimServiceName}/${productName}/${apiName}'
-  dependsOn: [
-    Api
-  ]
-}
+
+output apiId string = Api.id
+output name string = Api.name
