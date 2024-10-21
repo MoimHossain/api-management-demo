@@ -23,14 +23,13 @@ stages:
       displayName: 'Build Job'
       steps:
       - checkout: self
-      - task: AzureCLI@2
+      - bash: 'az login --service-principal -u $(sp_client_id) -p $(sp_client_secret) --tenant $(sp_tenant_id)'
+      - task: Bash@3
         displayName: Build docker image for TODO API and push to Azure container registry 
         inputs:
-          azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
-          scriptType: 'bash'
-          scriptLocation: 'scriptPath'
+          targetType: filePath
+          filePath: 'src/Infrastructure/Scripts/build-containers.sh'
           workingDirectory: 'src/TodoApi'
-          scriptPath: 'src/Infrastructure/Scripts/build-containers.sh'
         env:
             imageName: $(imageName)
             tag: $(tag)
@@ -48,13 +47,12 @@ stages:
             deploy:
               steps:
                 - checkout: self
-                - task: AzureCLI@2
+                - bash: 'az login --service-principal -u $(sp_client_id) -p $(sp_client_secret) --tenant $(sp_tenant_id)'
+                - task: Bash@3
                   displayName: Deploy containerapp to ACA
                   inputs:
-                    azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
-                    scriptType: 'bash'
-                    scriptLocation: 'scriptPath'                    
-                    scriptPath: 'src/Infrastructure/Scripts/deploy-containerapp.sh'
+                    targetType: filePath
+                    filePath: 'src/Infrastructure/Scripts/deploy-containerapp.sh'
                   env:
                     APP_NAME: $(APP_NAME)
                     APP_ENV: $(APP_ENV)
@@ -62,13 +60,11 @@ stages:
                     tagName: $(tag)
                     location: $(location)
                     resourceGroupName: $(resourceGroupName)                
-                - task: AzureCLI@2
+                - task: Bash@3
                   displayName: Update API management
                   inputs:
-                    azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
-                    scriptType: 'bash'
-                    scriptLocation: 'scriptPath'
-                    scriptPath: 'src/Infrastructure/Scripts/update-api.sh'
+                    targetType: filePath
+                    filePath: 'src/Infrastructure/Scripts/update-api.sh'
                   env:
                     primaryMode: "no"
                     APP_NAME: $(APP_NAME)

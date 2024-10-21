@@ -19,13 +19,12 @@ stages:
       displayName: 'Promote API as Public Release'
       steps:
       - checkout: self
-      - task: AzureCLI@2
+      - bash: 'az login --service-principal -u $(sp_client_id) -p $(sp_client_secret) --tenant $(sp_tenant_id)'
+      - task: Bash@3
         displayName: Promotes the latest preview as Public Release
         inputs:
-          azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
-          scriptType: 'bash'
-          scriptLocation: 'scriptPath'
-          scriptPath: 'src/Infrastructure/Scripts/promote-api.sh'
+          targetType: filePath
+          filePath: 'src/Infrastructure/Scripts/promote-api.sh'
         env:
           primaryMode: "Yes"
           APP_NAME: $(APP_NAME)
