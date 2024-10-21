@@ -7,7 +7,7 @@ variables:
  resourceGroupName: "api-management-demo"
  location: "westeurope"
  APP_NAME: "solar"
- APP_ENV: "dev"
+ APP_ENV: "uat"
  acaEnvName: "$(APP_NAME)-appenv-$(APP_ENV)" 
  imageName: "todo-api"
  tag: "$(Build.BuildId)"
