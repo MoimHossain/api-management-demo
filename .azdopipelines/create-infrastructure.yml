@@ -24,10 +24,9 @@ stages:
       - task: Bash@3
         displayName: 'Deploy infrastructure'
         inputs:
-          scriptType: 'bash'
-          scriptLocation: 'scriptPath'
-          scriptPath: 'src/Infrastructure/Scripts/create-core-infra.sh'
-          workingDirectory: 'src/Infrastructure/Platform'
+          targetType: filePath
+          filePath: 'src/Infrastructure/Scripts/create-core-infra.sh'
+          workingDirectory: src/Infrastructure/Platform
         env:
           APP_NAME: $(APP_NAME)
           APP_ENV: $(APP_ENV)
