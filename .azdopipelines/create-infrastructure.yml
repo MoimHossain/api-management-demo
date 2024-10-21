@@ -8,30 +8,28 @@ variables:
  resourceGroupName: "api-management-demo" 
  location: "westeurope"
  APP_NAME: "solar"
- APP_ENV: "dev"
+ APP_ENV: "uat"
 
 
 stages:
-  - stage: PlatformProvisionStage
+  - stage: CreateInfrastructure
+    displayName: 'Create Infrastructure'    
     jobs:
-      - deployment: PlatformProvision
-        displayName: Provisions or updates the Development environment
-        environment: AEGIS-DEV
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - checkout: self
-                - task: AzureCLI@2
-                  displayName: Provision or update resources                  
-                  inputs:
-                    azureSubscription: 'MCAPS-Hybrid-REQ-38041-2022-MoimHossain'
-                    workingDirectory: 'src/Infrastructure/Platform'
-                    scriptType: 'bash'
-                    scriptLocation: 'scriptPath'                    
-                    scriptPath: 'src/Infrastructure/Scripts/create-core-infra.sh'
-                  env:
-                    APP_NAME: $(APP_NAME)
-                    APP_ENV: $(APP_ENV)
-                    resourceGroupName: $(resourceGroupName)
-                    location: $(location)
+    - job: CreateInfra
+      displayName: Provision or update resources                  
+      steps:
+      - checkout: self
+      - bash: 'az login --service-principal -u $(sp_client_id) -p $(sp_client_secret) --tenant $(sp_tenant_id)'
+        displayName: 'Login to Azure'
+      - task: Bash@3
+        displayName: 'Deploy infrastructure'
+        inputs:
+          scriptType: 'bash'
+          scriptLocation: 'scriptPath'
+          scriptPath: 'src/Infrastructure/Scripts/create-core-infra.sh'
+          workingDirectory: 'src/Infrastructure/Platform'
+        env:
+          APP_NAME: $(APP_NAME)
+          APP_ENV: $(APP_ENV)
+          resourceGroupName: $(resourceGroupName)
+          location: $(location)                  
