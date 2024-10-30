@@ -66,7 +66,7 @@ stages:
                     targetType: filePath
                     filePath: 'src/Infrastructure/Scripts/update-api.sh'
                   env:
-                    primaryMode: "yes"
+                    primaryMode: "no"
                     APP_NAME: $(APP_NAME)
                     APP_ENV: $(APP_ENV)
                     imageName: $(imageName)
