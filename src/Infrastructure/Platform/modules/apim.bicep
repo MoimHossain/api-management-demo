@@ -1,6 +1,7 @@
 
 param apimServiceName string
 param location string = resourceGroup().location
+param userAssignedIdentityName string
 param publisherEmail string 
 param publisherName string 
 param sku string
@@ -9,6 +10,10 @@ param skuCount int
 param virtualNetworkName string
 param subnetName string
 param publicIpAddressName string
+
+resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' existing = {
+  name: userAssignedIdentityName
+}
 
 resource vnet 'Microsoft.Network/virtualNetworks@2023-02-01' existing = {
   name: virtualNetworkName
@@ -42,6 +47,12 @@ resource apiManagementService 'Microsoft.ApiManagement/service@2023-03-01-previe
     publicIpAddressId: publicIpAddress.outputs.publicIpAddressId
     virtualNetworkConfiguration: {      
       subnetResourceId: subnet.id
+    }
+  }
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${uami.id}': {}
     }
   }
 }

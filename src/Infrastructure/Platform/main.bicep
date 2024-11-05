@@ -97,6 +97,7 @@ module apimService 'modules/apim.bicep' = {
   name: apimServiceName
   params: {
     apimServiceName: apimServiceName
+    userAssignedIdentityName: uami.name
     location: location
     sku: sku
     skuCount: skuCount
