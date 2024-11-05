@@ -1,0 +1,30 @@
+<policies>    
+    <inbound>
+        <base />
+        <send-request mode="new" response-variable-name="azresponse" timeout="20" ignore-error="false">
+            <set-url>https://management.azure.com/subscriptions/<subID>/resourcegroups?api-version=2021-04-01</set-url>
+            <set-method>GET</set-method>
+            <set-header name="Content-Type" exists-action="override">
+                <value>application/json</value>
+            </set-header>
+            <authentication-managed-identity resource="https://management.azure.com/" client-id="8b8bf5a9-6131-4144-881a-10b56e945e8c" />
+        </send-request>
+        <choose>
+            <when condition="@(context.Variables.ContainsKey("azresponse"))">
+                <return-response>
+                    <set-status code="200" />
+                    <set-body>@(((IResponse)context.Variables["azresponse"]).Body.As<string>())</set-body>
+                </return-response>
+            </when>
+        </choose>
+    </inbound>
+    <backend>
+        <base />
+    </backend>    
+    <outbound>
+        <base />
+    </outbound>    
+    <on-error>
+        <base />
+    </on-error>
+</policies>
