@@ -1,0 +1,7 @@
+@subscriptionKey=b4d2f0b6c7524e91acc5b3ad768e1174
+
+
+###
+GET https://solarapimuat.azure-api.net/webapi/azure-resource-groups HTTP/1.1
+Host: solarapimuat.azure-api.net
+ocp-apim-subscription-key: {{subscriptionKey}}

@@ -1,0 +1,13 @@
+@subscriptionKey=b4d2f0b6c7524e91acc5b3ad768e1174
+
+
+###
+POST https://solarapimuat.azure-api.net/petstore/pet HTTP/1.1
+Content-Type: application/json
+ocp-apim-subscription-key: {{subscriptionKey}}
+
+{"id":11,"name":"doggie","category":{"id":1,"name":"Dogs"},"photoUrls":["https//dog.net"],"tags":[{"id":1,"name":"puppy"}],"status":"available"}
+
+### 
+GET https://solarapimuat.azure-api.net/petstore/pet/findByTags?tags=puppy HTTP/1.1
+ocp-apim-subscription-key: {{subscriptionKey}}

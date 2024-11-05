@@ -1,0 +1,18 @@
+@subscriptionKey=b4d2f0b6c7524e91acc5b3ad768e1174
+
+### 
+GET https://solarapimuat.azure-api.net/echo/resource?vehicleType=train HTTP/1.1
+ocp-apim-subscription-key: {{subscriptionKey}}
+
+
+### 
+POST https://solarapimuat.azure-api.net/echo/resource HTTP/1.1
+ocp-apim-subscription-key: {{subscriptionKey}}
+Content-Type: application/json
+
+{
+	"vehicleType": "train",
+	"maxSpeed": 125,
+	"avgSpeed": 90,
+	"speedUnit": "mph"
+}
