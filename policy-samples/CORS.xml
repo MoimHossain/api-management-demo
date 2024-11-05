@@ -1,0 +1,14 @@
+        <cors allow-credentials="true">
+            <allowed-origins>
+                <origin>https://react-spa-msal-demo.wonderfulplant-6b5cf838.northeurope.azurecontainerapps.io/</origin>
+            </allowed-origins>
+            <allowed-methods>
+                <method>*</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+            <expose-headers>
+                <header>Access-Control-Allow-Origin</header>
+            </expose-headers>
+        </cors>
