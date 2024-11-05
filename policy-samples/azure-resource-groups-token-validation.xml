@@ -1,0 +1,44 @@
+<policies>
+    <!-- Throttle, authorize, validate, cache, or transform the requests -->
+    <inbound>
+        <base />
+        <validate-azure-ad-token tenant-id="9d22bb6f-0019-4c1f-970b-4d82f47b7ca4" failed-validation-error-message="Unauthorized">
+            <audiences>
+                <audience>api://67342e57-4883-46d1-8da9-36bbcd92b1d3</audience>
+            </audiences>
+            <required-claims>
+                <claim name="scp" match="all">
+                    <value>DATA.READ</value>
+                </claim>
+            </required-claims>
+        </validate-azure-ad-token>
+        <send-request mode="new" response-variable-name="azresponse" timeout="20" ignore-error="false">
+            <set-url>https://management.azure.com/subscriptions/7f2413b7-93b1-4560-a932-220c34c9db29/resourcegroups?api-version=2021-04-01</set-url>
+            <set-method>GET</set-method>
+            <set-header name="Content-Type" exists-action="override">
+                <value>application/json</value>
+            </set-header>
+            <authentication-managed-identity resource="https://management.azure.com/" client-id="8b8bf5a9-6131-4144-881a-10b56e945e8c" />
+        </send-request>
+        <choose>
+            <when condition="@(context.Variables.ContainsKey("azresponse"))">
+                <return-response>
+                    <set-status code="200" />
+                    <set-body>@(((IResponse)context.Variables["azresponse"]).Body.As<string>())</set-body>
+                </return-response>
+            </when>
+        </choose>
+    </inbound>
+    <!-- Control if and how the requests are forwarded to services  -->
+    <backend>
+        <base />
+    </backend>
+    <!-- Customize the responses -->
+    <outbound>
+        <base />
+    </outbound>
+    <!-- Handle exceptions and customize error responses  -->
+    <on-error>
+        <base />
+    </on-error>
+</policies>
