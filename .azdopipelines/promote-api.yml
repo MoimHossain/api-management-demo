@@ -21,11 +21,22 @@ stages:
       - checkout: self
       - bash: 'az login --service-principal -u $(sp_client_id) -p $(sp_client_secret) --tenant $(sp_tenant_id)'
       - task: Bash@3
+        displayName: Update New API Version
+        inputs:
+          targetType: filePath
+          filePath: 'src/Infrastructure/Scripts/update-api.sh'          
+        env:
+          primaryMode: "Yes"
+          APP_NAME: $(APP_NAME)
+          APP_ENV: $(APP_ENV)
+          imageName: $(imageName)
+          location: $(location)
+          resourceGroupName: $(resourceGroupName)      
+      - task: Bash@3
         displayName: Promotes the latest preview as Public Release
         inputs:
           targetType: filePath
-          filePath: 'src/Infrastructure/Scripts/promote-api.sh'
-          workingDirectory: 'src/Infrastructure/Scripts'
+          filePath: 'src/Infrastructure/Scripts/promote-api.sh'          
         env:
           primaryMode: "Yes"
           APP_NAME: $(APP_NAME)

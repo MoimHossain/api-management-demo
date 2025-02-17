@@ -13,7 +13,7 @@ echo "image name: $imageName"
 
 az containerapp ingress traffic set -n $imageName -g $resourceGroupName --revision-weight latest=100
 
-./update-api.sh
+#./update-api.sh
 
 json_output=$(az containerapp revision list -n $imageName -g $resourceGroupName --query "[?properties.trafficWeight == \`0\`].{name:name}")
 
