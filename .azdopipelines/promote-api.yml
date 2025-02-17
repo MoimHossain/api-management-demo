@@ -25,6 +25,7 @@ stages:
         inputs:
           targetType: filePath
           filePath: 'src/Infrastructure/Scripts/promote-api.sh'
+          workingDirectory: 'src/Infrastructure/Scripts'
         env:
           primaryMode: "Yes"
           APP_NAME: $(APP_NAME)
